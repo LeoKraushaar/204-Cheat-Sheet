@@ -162,6 +162,8 @@ The edge $(u, v)$ refers to the FOREST, not the graph.
 
 - The problem: find the min-cost path from source $s$ to each vertex $v$.
 
+- Shortest path is at most of length $n-1$.
+
 \textbf{Dijkstra}
 
 - List + binary heap (as a min-PQ): $O((m+n)\log(n))$
@@ -180,10 +182,18 @@ relax($u, v$): if $d(v) > d(u) + w(u, v)$:
 
 \hspace{0.5cm} $d(v) \leftarrow d(u) + w(u, v)$
 
-\textbf{Bellman-Ford}
+\textbf{Bellman-Ford} $O(VE)$
 
+- Can handle negative edge weights (but not negative cycles!)
 
+{\small \textbf{Procedure:}
+Initialize $d(v) = \infty,\ \forall v$; set $d(s) = 0$; for $i \in \{1, \ldots, (n-1)\}$, relax \emph{all edges}; for $e \in E$, if $d(u) + w(u, v) < d(v)$, return False. Else, return true. This last step checks for negative cycles.}
 
+- Use a DP table, dim = $0:(n-1) \times n$
+
+- $d_{i}(v) \leftarrow \min(d_{i-1}(v), \min_{u \in Neigh(v)}[d_{i-1}(u) + w(u,v)])$
+
+\textbf{Floyd-Warshall}
 
 \end{minipage}
 
