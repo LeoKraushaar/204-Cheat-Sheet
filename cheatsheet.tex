@@ -69,6 +69,8 @@ Forest: graph with trees as connected components
 
 Spanning tree: $T \subseteq G$ S.T $V(T) = V(G)$
 
+Undir. is a tree $\leftrightarrow$ connected and E = V - 1
+
 \textbf{BFS}
 
 - $O(n + m)$ time (list), $O(n^2)$ (matrix)
@@ -131,8 +133,57 @@ The edge $(u, v)$ refers to the FOREST, not the graph.
 
 \end{minipage}
 \vline
-\hspace{0.5cm}
+\hspace{1pt}
 \begin{minipage}[t]{0.45\textwidth}
+
+\textbf{Minimum Spanning Trees}
+
+- Spanning tree w/ minumum weight
+
+- DFS and BFS build spanning trees, but \emph{not} necessarily the MST.
+
+- Optimal Substructure: if $T = \text{MST of } G \rightarrow T[U], \text{ where } U \subset V$, if $T[U]$ is connected it is an MST.
+
+\textbf{Prim: } add best vertex
+
+\textbf{Kruskal's Algorithm} $(O((m + n)\log(n)))$
+
+- Only consider edges that do NOT create a cycle (safe edges)
+
+- Add lowest-cost edge on each iteration
+
+- Has greedy-choice property
+
+\textbf{Edge Switching}
+
+- Let $e' \notin T$, where $T \cup \{e'\}$ has a cycle. For any $e \in E$, where $e$ is in the cycle, $T \cup \{e'\} - \{e\}$ is a tree.
+
+\textbf{Single-Source Shortest Paths (SSSPs)}
+
+- The problem: find the min-cost path from source $s$ to each vertex $v$.
+
+\textbf{Dijkstra}
+
+- List + binary heap (as a min-PQ): $O((m+n)\log(n))$
+
+- Matrix: $O(n^2 + m\log(n))$
+
+- Fib heap: $\Theta(m + n\log(n))$
+
+- No negative cycles (undir), no negative edges (dir)
+
+\textbf{Relaxing an Edge}
+
+- $d(v)$ only updated w/ relax $\rightarrow d(v) \geq d(s, v)$
+
+relax($u, v$): if $d(v) > d(u) + w(u, v)$:
+
+\hspace{0.5cm} $d(v) \leftarrow d(u) + w(u, v)$
+
+\textbf{Bellman-Ford}
+
+
+
 
 \end{minipage}
 
