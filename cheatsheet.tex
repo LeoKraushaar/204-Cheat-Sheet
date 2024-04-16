@@ -4,14 +4,12 @@
 \usepackage[margin=0.1cm]{geometry}
 \usepackage{amsmath}
 
-
-
-
 \begin{document}
 
 \noindent
 \begin{minipage}[t]{0.45\textwidth}
 
+    
 \textbf{Graphs}
 
 Undir: $m \leq \binom{n}{2},\ \sum_{v}deg(v) = 2m$
@@ -25,6 +23,7 @@ Induced SG: result of removing node. Is subgraph, $e \in E' \leftrightarrow (e \
 $u$ connected to $v$: $(u \sim v) \rightarrow \exists$ path from $u$ to $v$
 
 $G$ connected if $(u \sim v)\ \forall (u, v)$
+
 
 \textbf{Representations}
 
@@ -54,6 +53,7 @@ Adj. List: $\sum_{v} outdeg(v) = E$
 
 - Access($v$) = $O(1)$, traverse $V = O(n)$
 
+
 \textbf{Trees}
 
 Tree: connected, acyclic graph
@@ -68,6 +68,7 @@ Spanning tree: $T \subseteq G$ S.T $V(T) = V(G)$
 
 Undir. is a tree $\leftrightarrow$ connected and E = V - 1
 
+
 \textbf{BFS}
 
 - $O(n + m)$ time (list), $O(n^2)$ (matrix)
@@ -75,6 +76,7 @@ Undir. is a tree $\leftrightarrow$ connected and E = V - 1
 - $\Theta(n)$ space for both list and matrix
 
 - Finds all nodes, finds shortest path from $s$ to all others
+
 
 \textbf{BFS}
 
@@ -98,6 +100,7 @@ The edge $(u, v)$ refers to the FOREST, not the graph.
 
 - Dir: DFS: all edges, BFS: no fwd edges
 
+
 \textbf{DAGs}
 
 - Source: no incoming edges
@@ -109,6 +112,7 @@ The edge $(u, v)$ refers to the FOREST, not the graph.
 - Source \& Sink $\rightarrow$ no cycles
 
 - A Digraph is a DAG $\leftrightarrow$ DFS has no back edges
+
 
 \textbf{Toposort}
 
@@ -122,6 +126,7 @@ The edge $(u, v)$ refers to the FOREST, not the graph.
 
 - Orders are not unique.
 
+
 \textbf{SCCs}
 
 - Run DFS. Run DFS on $G^T$, in decreasing order of ftime. The forests of the transpose DFS are the SCCs.
@@ -133,6 +138,7 @@ The edge $(u, v)$ refers to the FOREST, not the graph.
 \hspace{1pt}
 \begin{minipage}[t]{0.45\textwidth}
 
+    
 \textbf{Minimum Spanning Trees}
 
 - Spanning tree w/ minumum weight
@@ -141,7 +147,9 @@ The edge $(u, v)$ refers to the FOREST, not the graph.
 
 - Optimal Substructure: if $T = \text{MST of } G \rightarrow T[U], \text{ where } U \subset V$, if $T[U]$ is connected it is an MST.
 
+
 \textbf{Prim: } add best vertex
+
 
 \textbf{Kruskal's Algorithm} $(O((m + n)\log(n)))$
 
@@ -151,15 +159,18 @@ The edge $(u, v)$ refers to the FOREST, not the graph.
 
 - Has greedy-choice property
 
+
 \textbf{Edge Switching}
 
 - Let $e' \notin T$, where $T \cup \{e'\}$ has a cycle. For any $e \in E$, where $e$ is in the cycle, $T \cup \{e'\} - \{e\}$ is a tree.
+
 
 \textbf{Single-Source Shortest Paths (SSSPs)}
 
 - The problem: find the min-cost path from source $s$ to each vertex $v$.
 
 - Shortest path is at most of length $n-1$.
+
 
 \textbf{Dijkstra}
 
@@ -171,6 +182,7 @@ The edge $(u, v)$ refers to the FOREST, not the graph.
 
 - No negative cycles (undir), no negative edges (dir)
 
+
 \textbf{Relaxing an Edge}
 
 - $d(v)$ only updated w/ relax $\rightarrow d(v) \geq d(s, v)$
@@ -179,9 +191,11 @@ relax($u, v$): if $d(v) > d(u) + w(u, v)$:
 
 \hspace{0.5cm} $d(v) \leftarrow d(u) + w(u, v)$
 
+
 \textbf{Bellman-Ford} $O(VE)$
 
 - Can handle negative edge weights (but not negative cycles!)
+
 
 {\small \textbf{Procedure:}
 Initialize $d(v) = \infty,\ \forall v$; set $d(s) = 0$; for $i \in \{1, \ldots, (n-1)\}$, relax \emph{all edges}; for $e \in E$, if $d(u) + w(u, v) < d(v)$, return False. Else, return true. This last step checks for negative cycles.}
@@ -189,6 +203,7 @@ Initialize $d(v) = \infty,\ \forall v$; set $d(s) = 0$; for $i \in \{1, \ldots, 
 - Use a DP table, dim = $0:(n-1) \times n$
 
 - $d_{i}[v] \leftarrow \min(d_{i-1}[v], \min_{u \in Neigh(v)}[d_{i-1}[u] + w(u,v)])$
+
 
 \textbf{Floyd-Warshall} $O(n^3)$
 
@@ -215,13 +230,82 @@ Then, $d[i,j,k] = $ distance of shortest path from $i$ to $j$, such that all int
 \noindent
 \begin{minipage}[t]{0.45\textwidth}
 
-
     
+\textbf{Greedy Algorithms}
+
+Optimal Substructure: an optimal choice must be included in \emph{an} optimal solution, but not necessarily all of them.
+
+
+\textbf{Fractional Knapsack}
+
+$v_i = $ profit per unit weight $b_i / w_i$
+
+$x_i = \min(w_i, W_\text{remaining})$
+
+add $x_i$ amount of item $i$
+
+$W_\text{remaining} \leftarrow W_\text{remaining} - x_i$
+
+Choose item with highest $v_i$
+
+$X^*$ is unique $\rightarrow$ all $x^* \in X^*$ are saturated.
+
+
+\textbf{Job Scheduling}
+
+- Earliest-Start-Time-First (ESTF)
+
+Sort the $n$ jobs by start time $O(n\log(n))$; iterate $n$ times, and on each iteration find the right machine, schedule the job, and update the times. Total runtime: $O(n\log(n))$.
+
+Alternatively use a min-heap: also $O(n\log(n))$.
+
+
+\textbf{Activity Selection}
+
+- Earliest-Finish-Time-First (EFTF); $\Theta(n\log(n))$
+
+\textbf{Dynamic Programming}
+
+\textbf{Integral Knapsack}
+
+- $n$ items: table with $0:n-1$ rows, $0:W$ columns. $D$ is remaining capacity, $W$ is total capacity.
+
+- $\forall D, \ A[0,D] = 0$
+
+- $\forall i, \ A[i,0] = 0$
+
+- Else, $A[i,D] = \max(A[i-1, D], v_i + A[i-1, D - w_i])$
+
+\textbf{Rod Cutting}
+
+- $r_0 = 0$
+
+- Else, $r_n = \max_{i \in 1:n} (p_{i} + r_{n-i})$
+
+\textbf{Longest Common Subsequence}
+
+- $O(nm)$
+
+- $len(X) = n, \ len(Y) = m$.
+
+- Table: $0:n \times 0:m$.
+
+- $A[i,j] = \max(D[i-1, j], D[i, j-1], 1 + D[i-1, j-1])$
+
+- Last one only if $X[i] = Y[j]$.
+
+\textbf{MCM}
+
+- $n$ matrices
+
+- $d \in \{0, \ldots, n+1\}$
+
+- $A[i, j] = \min_{i \leq k < j} (A[i,k] + A[k+1, j], +\ d_{i-1}d_k d_j )$
+
 \end{minipage}
 \vline
 \hspace{1pt}
 \begin{minipage}[t]{0.45\textwidth}
-
 
 
 \end{minipage}
