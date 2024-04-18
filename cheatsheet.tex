@@ -2,6 +2,7 @@
 
 \usepackage[margin=0.1cm]{geometry}
 \usepackage{amsmath}
+\usepackage{graphicx}
 
 \begin{document}
 
@@ -9,6 +10,8 @@
 \begin{minipage}[t]{0.45\textwidth}
 
 \textbf{Graphs}
+
+Assuming no self-loops, no multiple edges.
 
 Undir: $m \leq \binom{n}{2},\ \sum_{v}deg(v) = 2m$
 
@@ -75,9 +78,11 @@ Undir. is a tree $\leftrightarrow$ connected and E = V - 1
 
 - Finds all nodes, finds shortest path from $s$ to all others
 
-\textbf{BFS}
+\textbf{DFS}
 
 - $O(n + m)$ time (list), $O(n^2)$ (matrix)
+
+- $O(n + m)$ space
 
 - Finds all nodes, finds shortest path from $s$ to all others
 
@@ -173,6 +178,8 @@ The edge $(u, v)$ refers to the FOREST, not the graph.
 
 \textbf{Dijkstra}
 
+It's kind of like $A^*$ search!
+
 {\small \textbf{Algo:}} \emph{Init.} $S = \emptyset$; \emph{Init.} $d(v) = \infty,\ \forall v \neq s$, $d(s) = 0$; \emph{Init.} Min-Queue, keyed by $d(v)$. \emph{While} $Q \neq \emptyset$, \emph{extract} $u = \text{min}(Q)$, \emph{Add} $u$ to $S$; \emph{Relax} all edges $(u,v)$.
 
 - List + binary heap (as a min-PQ): $O((m+n)\log(n))$
@@ -230,6 +237,7 @@ Then, $d[i,j,k] = $ distance of shortest path from $i$ to $j$, such that all int
 - So, $d[i,j,k] = \min(\text{Case 1, Case 2})$
 
 - Base cases: $d[i,j,0] = w(i,j), \ d[i,i,k] = 0$.
+
 
 \end{minipage}
 
@@ -365,11 +373,35 @@ heapSort: $\Theta(n\log(n))$
 
 \textbf{QuickSort}
 
+- Partition: $O(n)$, returns index of pivot.
+
+- Worst case: $O(n^2)$
+
+- Average and best case: $O(n\log(n))$
+
+- For any split of constant ratio, $\Theta(n\log(n))$
+
+{\small \textbf{Randomized QuickSort}}
+
+- Pivot selected uniformly at random
+
+- Average, best, and expected worst-case runtime: $\Theta(n\log(n))$
+
 \textbf{Sorting Lower Bound}
+
+- Any comparison-based sorting algorithm requires $\Omega(n\log(n))$ comparisons in the worst case.
+
+- A binary tree with $t$ leaves has at least $1 + \log(t)$, or eqiuvalently, a height of at least $\log(t)$.
+
+- So in other words, a decision tree has at least $n!$ leaves. It follows that the height of the tree is at least $\log(n!)$.
+
+- Height = edges
+
+- levels = edges + 1
 
 \textbf{Binary Search Trees}
 
-Right-(Left)-Rotate: $x$ becomes the right (left) child of new root, usually its left (right) child.
+- Right-(Left)-Rotate: $x$ becomes the right (left) child of new root, usually its left (right) child.
 
 \textbf{AVL Trees}
 
@@ -380,6 +412,8 @@ Right-(Left)-Rotate: $x$ becomes the right (left) child of new root, usually its
 - 
 
 \end{minipage}
+% \centering
+% \includegraphics[width=0.5\textwidth]{img.png}
 
 
 \end{document}
