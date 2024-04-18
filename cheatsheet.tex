@@ -1,5 +1,4 @@
-\documentclass[letterpaper]{article}
-
+\documentclass[8pt, letterpaper]{extarticle}
 
 \usepackage[margin=0.1cm]{geometry}
 \usepackage{amsmath}
@@ -9,7 +8,6 @@
 \noindent
 \begin{minipage}[t]{0.45\textwidth}
 
-    
 \textbf{Graphs}
 
 Undir: $m \leq \binom{n}{2},\ \sum_{v}deg(v) = 2m$
@@ -76,7 +74,6 @@ Undir. is a tree $\leftrightarrow$ connected and E = V - 1
 - $\Theta(n)$ space for both list and matrix
 
 - Finds all nodes, finds shortest path from $s$ to all others
-
 
 \textbf{BFS}
 
@@ -164,15 +161,19 @@ The edge $(u, v)$ refers to the FOREST, not the graph.
 
 - Let $e' \notin T$, where $T \cup \{e'\}$ has a cycle. For any $e \in E$, where $e$ is in the cycle, $T \cup \{e'\} - \{e\}$ is a tree.
 
-
 \textbf{Single-Source Shortest Paths (SSSPs)}
 
 - The problem: find the min-cost path from source $s$ to each vertex $v$.
 
 - Shortest path is at most of length $n-1$.
 
+\textbf{Relax}
+
+\emph{If} $d(v) > d(u) + w(u, v)$, \emph{then} $d(v) \leftarrow d(u) + w(u, v)$
 
 \textbf{Dijkstra}
+
+{\small \textbf{Algo:}} \emph{Init.} $S = \emptyset$; \emph{Init.} $d(v) = \infty,\ \forall v \neq s$, $d(s) = 0$; \emph{Init.} Min-Queue, keyed by $d(v)$. \emph{While} $Q \neq \emptyset$, \emph{extract} $u = \text{min}(Q)$, \emph{Add} $u$ to $S$; \emph{Relax} all edges $(u,v)$.
 
 - List + binary heap (as a min-PQ): $O((m+n)\log(n))$
 
@@ -182,6 +183,11 @@ The edge $(u, v)$ refers to the FOREST, not the graph.
 
 - No negative cycles (undir), no negative edges (dir)
 
+\textbf{Properties}
+
+\emph{Subpath Optimality}: If $P = (s,...u,...v,...t)$, then each subpath is the shortest corresponding path.
+
+\emph{Triangle Inequality}: $d(u,w) \leq d(u,v) + d(v,w)$.
 
 \textbf{Relaxing an Edge}
 
@@ -191,21 +197,23 @@ relax($u, v$): if $d(v) > d(u) + w(u, v)$:
 
 \hspace{0.5cm} $d(v) \leftarrow d(u) + w(u, v)$
 
-
 \textbf{Bellman-Ford} $O(VE)$
 
 - Can handle negative edge weights (but not negative cycles!)
 
+- Updates distances OFFLINE.
 
-{\small \textbf{Procedure:}
-Initialize $d(v) = \infty,\ \forall v$; set $d(s) = 0$; for $i \in \{1, \ldots, (n-1)\}$, relax \emph{all edges}; for $e \in E$, if $d(u) + w(u, v) < d(v)$, return False. Else, return true. This last step checks for negative cycles.}
+{\small \textbf{Algo:}} \emph{Init.} $d(v) = \infty,\ \forall v \neq s,\ d(s) = 0$; \emph{For} $i \in \{1,...,n-1\}$, \emph{For} $(u,v) \in E$, \emph{Relax} edges $(u,v)$. \emph{Endfor.} \emph{For} $(u,v) \in E$; \emph{If } $d(u) + w(u,v) \leq d(v)$, \emph{Return} FALSE. \emph{Else} return TRUE.
 
 - Use a DP table, dim = $0:(n-1) \times n$
 
 - $d_{i}[v] \leftarrow \min(d_{i-1}[v], \min_{u \in Neigh(v)}[d_{i-1}[u] + w(u,v)])$
 
+- Order irrelevant to final product.
 
 \textbf{Floyd-Warshall} $O(n^3)$
+
+- $V \times V$ table, $v_1,...v_n$.
 
 - Allows negative weights, no negative cycles.
 
@@ -307,6 +315,69 @@ Alternatively use a min-heap: also $O(n\log(n))$.
 \hspace{1pt}
 \begin{minipage}[t]{0.45\textwidth}
 
+\textbf{Asymptotic Cheatsheet}
+
+For some set $S$,
+
+If $f(n) \in S(g(n))$ and $g(n) \in S(h(n))$ then $f(n) \in S(h(n))$.
+
+$\sum_{k=0}^{n} r^k = \frac{1 - r^{n+1}}{1 - r} = \frac{r^{n+1} - 1}{r - 1}$
+
+$n! = \sqrt{2\pi n}(\frac{n}{e})^n$
+
+{\small \textbf{Limits: }}
+
+$\lim_{n \to \infty} \frac{h(n)}{f(n)} = 0 \rightarrow h(n) \in o(f(n))$
+
+$\lim_{n \to \infty} \frac{h(n)}{f(n)} = k > 0 \rightarrow h(n) \in \Theta(f(n))$
+
+$\log^k(n) \in o(n^{\varepsilon})$, $\forall k, \varepsilon > 0$
+
+$n\log(n) \in \Theta(\log(n!))$
+
+\textbf{Master Theorem}
+
+Let $T(n) = aT(\frac{n}{b}) + f(n)$
+
+Bottom-Heavy: Leaves dominate runtime
+
+- $f(n) \in O(n^{\log_b(a) - \varepsilon}) \rightarrow T(n) \in \Theta(n^{\log_b(a)})$
+
+Balanced: Leaves and internal nodes do equal work
+
+- $f(n) \in \Theta(n^{\log_b(a) \log^k_n}) \rightarrow T(n) \in \Theta(n^{\log_b(a)}\log^{k+1}(n))$, $k \geq 0$
+
+Top-Heavy: Eariler nodes dominate runtime
+
+- $f(n) \in \Omega(n^{\log_b(a) + \varepsilon})$, and $af(\frac{n}{b}) \leq \delta f(n)$, $\delta < 1 \rightarrow T(n) \in \Theta(f(n))$
+
+\textbf{Heaps}
+
+Max-Heap Property: $A[\text{Parent}(i)] \geq A[i]$
+
+Heap of $n$ keys has height $\lfloor \log(n) \rfloor$
+
+buildMaxHeap: $O(n)$
+
+extractMax: $O(\log(n))$
+
+heapSort: $\Theta(n\log(n))$
+
+\textbf{QuickSort}
+
+\textbf{Sorting Lower Bound}
+
+\textbf{Binary Search Trees}
+
+Right-(Left)-Rotate: $x$ becomes the right (left) child of new root, usually its left (right) child.
+
+\textbf{AVL Trees}
+
+- Height-balanced: $|h_l - h_r| \leq 1$
+
+- $h = O(\log(n))$
+
+- 
 
 \end{minipage}
 
